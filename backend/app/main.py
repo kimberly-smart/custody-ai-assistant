@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from app.routes import documents
 from app.db.database import engine, Base
 from app.models.document import Document
+from app.models.document_chunk import DocumentChunk
 
 app = FastAPI(
     title="CustodyAI Assistant",
