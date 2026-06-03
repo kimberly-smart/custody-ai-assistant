@@ -41,7 +41,8 @@ def generate_grounded_answer(
 
     for chunk in retrieved_chunks:
         context_sections.append(
-            f"[Document ID: {chunk['document_id']}, "
+            f"[Filename: {chunk['filename']}, "
+            f"Document Type: {chunk['document_type']}, "
             f"Page: {chunk['page_number']}, "
             f"Chunk ID: {chunk['chunk_id']}]\n"
             f"{chunk['content']}"
@@ -56,7 +57,7 @@ Answer only from the provided document excerpts.
 Do not give legal advice.
 Do not infer facts that are not present in the excerpts.
 If the excerpts do not contain enough information, state that the uploaded documents do not provide enough information to answer.
-Include the relevant document ID and page number in the answer.
+Include the relevant filename and page number in the answer.
 Keep the answer clear and concise.
 """
 

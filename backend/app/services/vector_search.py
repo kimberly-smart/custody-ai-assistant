@@ -1,7 +1,8 @@
 import json
 import math
-from typing import List, Dict
+from typing import Dict, List
 
+from app.models.document import Document
 from app.models.document_chunk import DocumentChunk
 from app.services.embeddings import create_embedding
 
@@ -25,21 +26,24 @@ def search_similar_chunks(
 ) -> List[Dict]:
     query_embedding = create_embedding(query)
 
-    chunks = (
-        db.query(DocumentChunk)
+    chunk_rows = (
+        db.query(DocumentChunk, Document)
+        .join(Document, DocumentChunk.document_id == Document.id)
         .filter(DocumentChunk.embedding.isnot(None))
         .all()
     )
 
     results = []
 
-    for chunk in chunks:
+    for chunk, document in chunk_rows:
         chunk_embedding = json.loads(chunk.embedding)
         score = cosine_similarity(query_embedding, chunk_embedding)
 
         results.append({
             "chunk_id": chunk.id,
             "document_id": chunk.document_id,
+            "filename": document.filename,
+            "document_type": document.document_type,
             "page_number": chunk.page_number,
             "chunk_index": chunk.chunk_index,
             "content": chunk.content,

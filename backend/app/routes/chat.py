@@ -35,6 +35,8 @@ def ask_question(
         {
             "chunk_id": chunk["chunk_id"],
             "document_id": chunk["document_id"],
+            "filename": chunk["filename"],
+            "document_type": chunk["document_type"],
             "page_number": chunk["page_number"],
             "similarity_score": chunk["similarity_score"]
         }
