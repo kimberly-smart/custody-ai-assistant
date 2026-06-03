@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routes import documents
+from app.routes import documents, chat
 from app.db.database import engine, Base
 from app.models.document import Document
 from app.models.document_chunk import DocumentChunk
@@ -11,7 +11,9 @@ app = FastAPI(
 )
 
 Base.metadata.create_all(bind=engine)
+
 app.include_router(documents.router)
+app.include_router(chat.router)
 
 @app.get("/")
 def root():
