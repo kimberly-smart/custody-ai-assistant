@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
+  const [mode, setMode] = useState("documents");
   const [messages, setMessages] = useState([
     {
       role: "assistant",
@@ -33,24 +34,45 @@ function App() {
 
     try {
       const formData = new FormData();
-      formData.append("question", trimmedQuestion);
-      formData.append("top_k", "2");
 
-      const response = await fetch("http://127.0.0.1:8000/chat/ask", {
+      let endpoint = "";
+      let assistantText = "";
+      let sources = [];
+
+      if (mode === "documents") {
+        endpoint = "http://127.0.0.1:8000/chat/ask";
+
+        formData.append("question", trimmedQuestion);
+        formData.append("top_k", "2");
+      } else {
+        endpoint = "http://127.0.0.1:8000/rewrite/message";
+
+        formData.append("message", trimmedQuestion);
+        formData.append("tone", "neutral");
+      }
+
+      const response = await fetch(endpoint, {
         method: "POST",
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error("Unable to receive an answer from the server.");
+        throw new Error("Unable to receive a response from the server.");
       }
 
       const data = await response.json();
 
+      if (mode === "documents") {
+        assistantText = data.answer;
+        sources = data.sources || [];
+      } else {
+        assistantText = data.rewritten_message;
+      }
+
       const assistantMessage = {
         role: "assistant",
-        text: data.answer,
-        sources: data.sources || [],
+        text: assistantText,
+        sources: sources,
       };
 
       setMessages((currentMessages) => [
@@ -62,7 +84,10 @@ function App() {
         ...currentMessages,
         {
           role: "assistant",
-          text: "Something went wrong while answering your question. Please try again.",
+          text:
+            mode === "documents"
+              ? "Something went wrong while answering your question. Please try again."
+              : "Something went wrong while rewriting your message. Please try again.",
           sources: [],
         },
       ]);
@@ -106,10 +131,37 @@ function App() {
       <main className="chat-panel">
         <header className="chat-header">
           <div>
-            <h2>Custody & Divorce Document Assistant</h2>
-            <p>Ask questions based on your uploaded court documents.</p>
+            <h2>Custody & Divorce Assistant</h2>
+            <p>
+              {mode === "documents"
+                ? "Ask questions based on your uploaded court documents."
+                : "Rewrite emotional messages into calm co-parenting communication."}
+            </p>
           </div>
-          <span className="status">Azure RAG Active</span>
+
+          <div className="header-controls">
+            <div className="mode-switch">
+              <button
+                type="button"
+                className={mode === "documents" ? "mode-button active" : "mode-button"}
+                onClick={() => setMode("documents")}
+              >
+                Ask Documents
+              </button>
+
+              <button
+                type="button"
+                className={mode === "rewrite" ? "mode-button active" : "mode-button"}
+                onClick={() => setMode("rewrite")}
+              >
+                Rewrite Message
+              </button>
+            </div>
+
+            <span className="status">
+              {mode === "documents" ? "Azure RAG Active" : "Rewrite Mode"}
+            </span>
+          </div>
         </header>
 
         <section className="messages">
@@ -143,7 +195,9 @@ function App() {
               <div className="avatar">AI</div>
               <div className="message-content">
                 <div className="message-bubble loading">
-                  Searching your documents...
+                  {mode === "documents"
+                  ? "Searching your documents..."
+                  : "Rewriting your message..."}
                 </div>
               </div>
             </div>
@@ -153,7 +207,11 @@ function App() {
         <form className="composer" onSubmit={handleSubmit}>
           <input
             type="text"
-            placeholder="Ask about your custody or divorce documents..."
+            placeholder={
+              mode === "documents"
+                ? "Ask about your custody or divorce documents..."
+                : "Paste a message and describe the tone, e.g. 'Rewrite this firmly: ...'"
+            }
             value={question}
             onChange={(event) => setQuestion(event.target.value)}
             disabled={isLoading}

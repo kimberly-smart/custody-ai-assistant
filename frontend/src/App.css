@@ -261,3 +261,33 @@
   background: #93c5fd;
   cursor: not-allowed;
 }
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mode-switch {
+  display: flex;
+  padding: 4px;
+  background: #f1f5f9;
+  border-radius: 12px;
+}
+
+.mode-button {
+  border: none;
+  background: transparent;
+  color: #64748b;
+  padding: 8px 12px;
+  border-radius: 9px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.mode-button.active {
+  background: white;
+  color: #1d4ed8;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+}
