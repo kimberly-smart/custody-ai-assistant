@@ -1,0 +1,263 @@
+* {
+  box-sizing: border-box;
+}
+
+#root {
+  height: 100vh;
+}
+
+.app-layout {
+  display: flex;
+  height: 100vh;
+  background: #f7f8fb;
+  color: #111827;
+  font-family: Inter, Arial, sans-serif;
+}
+
+.sidebar {
+  width: 285px;
+  background: #101827;
+  color: #eef2ff;
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.brand-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: #2563eb;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.brand h1 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.brand p {
+  color: #94a3b8;
+  margin: 2px 0 0;
+  font-size: 13px;
+}
+
+.new-chat-button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 11px;
+  padding: 13px;
+  font-size: 15px;
+  cursor: pointer;
+  margin-bottom: 34px;
+}
+
+.sidebar-section h2 {
+  color: #94a3b8;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 12px;
+  margin: 0 0 12px;
+}
+
+.document-card {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 12px;
+  background: #1b2639;
+}
+
+.document-icon {
+  font-size: 11px;
+  font-weight: 700;
+  color: #bfdbfe;
+  background: #22385b;
+  padding: 8px 5px;
+  border-radius: 7px;
+}
+
+.document-card strong {
+  font-size: 13px;
+}
+
+.document-card p {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.disclaimer {
+  margin-top: auto;
+  background: #172336;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 12px;
+  color: #cbd5e1;
+}
+
+.disclaimer strong {
+  display: block;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.disclaimer p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.chat-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header {
+  height: 78px;
+  border-bottom: 1px solid #e5e7eb;
+  background: white;
+  padding: 17px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.chat-header p {
+  color: #64748b;
+  margin: 5px 0 0;
+  font-size: 13px;
+}
+
+.status {
+  font-size: 12px;
+  color: #047857;
+  background: #ecfdf5;
+  border-radius: 999px;
+  padding: 7px 12px;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 34px max(28px, calc((100% - 850px) / 2));
+}
+
+.message-row {
+  display: flex;
+  gap: 13px;
+  margin-bottom: 26px;
+}
+
+.message-row.user {
+  flex-direction: row-reverse;
+}
+
+.avatar {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: #2563eb;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.message-row.user .avatar {
+  background: #334155;
+}
+
+.message-content {
+  max-width: 72%;
+}
+
+.message-bubble {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 17px;
+  padding: 15px 17px;
+  line-height: 1.6;
+  font-size: 15px;
+  white-space: pre-wrap;
+}
+
+.message-row.user .message-bubble {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.message-bubble.loading {
+  color: #64748b;
+}
+
+.sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 9px;
+}
+
+.source-chip {
+  border-radius: 9px;
+  background: #eef4ff;
+  color: #1d4ed8;
+  font-size: 12px;
+  padding: 7px 10px;
+}
+
+.composer {
+  display: flex;
+  gap: 12px;
+  padding: 19px max(28px, calc((100% - 850px) / 2)) 25px;
+  background: #f7f8fb;
+}
+
+.composer input {
+  flex: 1;
+  padding: 16px 18px;
+  border-radius: 16px;
+  border: 1px solid #d1d5db;
+  background: white;
+  font-size: 15px;
+  outline: none;
+}
+
+.composer input:focus {
+  border-color: #2563eb;
+}
+
+.composer button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  padding: 0 24px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.composer button:disabled {
+  background: #93c5fd;
+  cursor: not-allowed;
+}
