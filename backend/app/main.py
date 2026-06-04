@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import documents, chat
+from app.routes import documents, chat, rewrite
 from app.db.database import engine, Base
 from app.models.document import Document
 from app.models.document_chunk import DocumentChunk
@@ -23,6 +23,7 @@ Base.metadata.create_all(bind=engine)
 
 app.include_router(documents.router)
 app.include_router(chat.router)
+app.include_router(rewrite.router)
 
 @app.get("/")
 def root():
