@@ -5,7 +5,6 @@ CustodyAI Assistant is a co-parenting application for divorced or separated pare
 ## Live Demo
 
 Frontend: https://custody-ai-assistant.vercel.app  
-Backend API Docs: https://custody-ai-assistant-1.onrender.com/docs
 
 ## Project Status
 
