@@ -40,6 +40,7 @@ This project is currently in early development and has a deployed demo version.
 - Render
 - Vercel
 - SQLite for demo storage
+- Dockerized FastAPI backend deployed on Render
 
 ## Important Note
 
