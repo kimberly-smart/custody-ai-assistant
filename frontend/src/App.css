@@ -291,3 +291,66 @@
   font-weight: 600;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
 }
+
+.upload-button {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 10px;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+}
+
+.upload-button:hover {
+  background: #1d4ed8;
+}
+
+.upload-button:has(input:disabled) {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.upload-message {
+  margin-top: 10px;
+  color: #cbd5e1;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.document-list {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.empty-documents {
+  color: #94a3b8;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.document-item {
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.document-name {
+  display: block;
+  color: #f8fafc;
+  font-size: 13px;
+  word-break: break-word;
+}
+
+.document-meta {
+  display: block;
+  margin-top: 4px;
+  color: #94a3b8;
+  font-size: 11px;
+}
