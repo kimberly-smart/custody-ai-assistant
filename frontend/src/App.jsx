@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./App.css";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+
 function App() {
   const [mode, setMode] = useState("documents");
   const [messages, setMessages] = useState([
@@ -40,12 +42,12 @@ function App() {
       let sources = [];
 
       if (mode === "documents") {
-        endpoint = "http://127.0.0.1:8000/chat/ask";
+        endpoint = `${API_URL}/chat/ask`;
 
         formData.append("question", trimmedQuestion);
         formData.append("top_k", "2");
       } else {
-        endpoint = "http://127.0.0.1:8000/rewrite/message";
+        endpoint = `${API_URL}/rewrite/message`;
 
         formData.append("message", trimmedQuestion);
         formData.append("tone", "neutral");
