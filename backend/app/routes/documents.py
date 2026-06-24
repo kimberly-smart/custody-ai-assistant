@@ -10,6 +10,7 @@ from app.services.chunker import split_text_into_chunks
 import json
 from app.services.embeddings import create_embedding
 from app.services.vector_search import search_similar_chunks
+from app.services.summarizer import generate_document_summary
 
 router = APIRouter(
     prefix="/documents",
@@ -182,6 +183,44 @@ def get_document_chunks(document_id: int, db: Session = Depends(get_db)):
         }
         for chunk in chunks
     ]
+
+@router.get("/{document_id}/summary")
+def summarize_document(document_id: int, db: Session = Depends(get_db)):
+    document = db.query(Document).filter(Document.id == document_id).first()
+
+    if not document:
+        raise HTTPException(status_code=404, detail="Document not found.")
+
+    chunks = (
+        db.query(DocumentChunk)
+        .filter(DocumentChunk.document_id == document_id)
+        .order_by(DocumentChunk.page_number, DocumentChunk.chunk_index)
+        .all()
+    )
+
+    chunk_data = [
+        {
+            "page_number": chunk.page_number,
+            "chunk_index": chunk.chunk_index,
+            "content": chunk.content,
+        }
+        for chunk in chunks
+    ]
+
+    summary = generate_document_summary(
+        filename=document.filename,
+        chunks=chunk_data,
+    )
+
+    page_numbers = sorted({chunk.page_number for chunk in chunks})
+
+    return {
+        "document_id": document.id,
+        "filename": document.filename,
+        "summary": summary,
+        "pages_used": page_numbers,
+        "chunk_count": len(chunks),
+    }
 
 @router.get("/{document_id}")
 def get_document(document_id: int, db: Session = Depends(get_db)):
